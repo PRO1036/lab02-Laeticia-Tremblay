@@ -31,7 +31,8 @@ plastic_waste <- plastic_waste %>%
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap)) +
   geom_histogram(binwidth = 0.2) +
-    facet_wrap(~ continent)
+    facet_wrap(~ continent) +
+   labs(title = "Quantité de déchets plastiques produits par habitant", subtitle = "Selon le continent", x ="Déchets plastiques par habitant", y = "Quantité")
 ```
 
 Certains continents ont une quantité de déchets produits par jour par habitant plus élevée que d'autre. En effet, l'Afrique est un très petit producteur de déchets plastiques. La production de déchets plastiques par habitant se ressemble en Amérique du Sud, en Europe et en Océanie, où la majorité des habitants en produisent environ 0,25 kg par jour et où très peu en produisent plus que ça. Finalement, l'Asie et l'Amérique du Nord sont les plus gros producteurs de déchets plastiques. Une majorité en produit 0,25 kg par jour et plusieurs en prodsuisent plus. 
@@ -41,19 +42,23 @@ Certains continents ont une quantité de déchets produits par jour par habitant
 ```{r plastic-waste-density}
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap)) +
-  geom_density(adjust = 1) 
+  geom_density(adjust = 1) +
+  labs(title = "Quantité de déchets plastiques produits par habitant", x ="Déchets plastiques par habitant", y = "Densité")
 
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap, color = continent)) +
-  geom_density(adjust = 1) 
+  geom_density(adjust = 1) +
+  labs(title = "Quantité de déchets plastiques produits par habitant", subtitle = "Selon le continent", x ="Déchets plastiques par habitant", y = "Densité", color = "Continent")
 
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap, color = continent, fill = continent)) +
-  geom_density(adjust = 1) 
+  geom_density(adjust = 1) +
+  labs(title = "Quantité de déchets plastiques produits par habitant", subtitle = "Selon le continent", x ="Déchets plastiques par habitant", y = "Densité", color = "Continent", fill = "Continent")
 
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap, color = continent, fill = continent)) +
-  geom_density(adjust = 1, alpha = 0.4) 
+  geom_density(adjust = 1, alpha = 0.4) +
+  labs(title = "Quantité de déchets plastiques produits par habitant", subtitle = "Selon le continent", x ="Déchets plastiques par habitant", y = "Densité", color = "Continent", fill = "Continent")
 ```
 
 C'est parce que lorsqu'on écrit dans la section aes, le réglage dépend de la donnée et donc change avec elle. Par exemble, la couleur change pour chaque continent. Quand on écrit dans la section geom_density, le paramètre reste le même pour chaque donnée. Ainsi, la transparence est identique pour chaque continent. 
@@ -65,7 +70,8 @@ Boxplot:
 ```{r plastic-waste-boxplot}
 ggplot(data = plastic_waste, 
        aes (x = continent, y = plastic_waste_per_cap)) +
-  geom_boxplot() 
+  geom_boxplot() +
+  labs(title = "Quantité de déchets plastiques produits par habitant pour chaque continent", x ="Continent", y = "Quantité de déchets plastiques par habitant")
 ```
 
 Violin plot:
@@ -73,7 +79,8 @@ Violin plot:
 ```{r plastic-waste-violin}
 ggplot(data = plastic_waste, 
        aes (x = continent, y = plastic_waste_per_cap)) +
-  geom_violin() 
+  geom_violin() +
+  labs(title = "Quantité de déchets plastiques produits par habitant pour chaque continent", x ="Continent", y = "Quantité de déchets plastiques par habitant")
 ```
 
 Les violins plots permettent de mieux voir la densité/la répartition des différentes valeurs, ce que les boxs plots ne peuvent pas faire. En effet, les boxs plots montrent plutôt des statistiques sur la distribution.
@@ -84,7 +91,8 @@ Les violins plots permettent de mieux voir la densité/la répartition des diff�
 ```{r plastic-waste-mismanaged}
 ggplot(data = plastic_waste, 
        aes (x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap, color = continent)) +
-  geom_point() 
+  geom_point() +
+  labs(title = "Quantité de déchets plastiques produits et non gerés par habitant ", subtitle = "Selon le continent", x ="Quantité de déchets plastiques produits par habitant", y = "Quantité de déchets plastiques non gerés par habitant", color = "Continent")
 ```
 
 Il y a une relation linéaire entre la quantité de déchet et la quantité de déchets non gerés. En effet, plus les gens produisent des déchets, plus il y a de déchets non gerés. 
@@ -96,13 +104,15 @@ En colorant les points selon le continent, on peut voir que l'Europe et l'Améri
 ```{r plastic-waste-population-total}
 ggplot(data = plastic_waste, 
        aes (x = total_pop, y = plastic_waste_per_cap)) +
-  geom_point() 
+  geom_point() +
+  labs(title = "Relation entre la quantité de déchets plastiques produits par habitant et le nombre total d'habitants", x ="Population totale", y = "Quantité de déchets plastiques produits par habitant")
 ```
 
 ```{r plastic-waste-population-coastal}
 ggplot(data = plastic_waste, 
        aes (x = coastal_pop, y = plastic_waste_per_cap)) +
-  geom_point() 
+  geom_point() +
+  labs(title = "Relation entre la quantité de déchets plastiques produits par habitant et le nombre total d'habitants vivant près de côtes", x ="Nombre d'habitants vivant près des côtes", y = "Quantité de déchets plastiques produits par habitant")
 ```
 
 En regardant les deux graphiques, il ne semble pas vraiment  y avoir une relation plus forte pour une des deux paires de variables. Les deux graphiques sont très similaires. 
@@ -112,5 +122,16 @@ En regardant les deux graphiques, il ne semble pas vraiment  y avoir une relatio
 Recréez la visualisation:
 
 ```{r recreate-viz}
-# insert code here
+plastic_waste_coastal <- plastic_waste %>% 
+  mutate(coastal_pop_prop = coastal_pop / total_pop) %>%
+  filter(plastic_waste_per_cap < 3)
+
+ggplot(data = plastic_waste_coastal, 
+       aes (x = coastal_pop_prop, y = plastic_waste_per_cap, color = continent)) +
+  geom_point() +
+  geom_smooth(method = "loess", color = "black") +
+  labs(title = "Quantité de déchets plastiques vs proportion de la population côtière", subtitle = "Selon le continent", x ="Proportion de la population côtière (coastal/total population)", y = "Nombre de déchets plastiques par habitant", color = "Continent")
 ```
+
+La relation entre le nombre de déchets plastiques par habitant et la propotion des habitants qui habite près des côtes n'est pas linéaire. Le graphique nous permet de voir la contribution de la population côtière à la quantité de déchets plastiques produits par tous. 
+
