@@ -88,36 +88,72 @@ identique pour chaque continent.
 Boxplot:
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = continent, y = plastic_waste_per_cap)) +
+  geom_boxplot() 
 ```
+
+![](lab-02_files/figure-gfm/plastic-waste-boxplot-1.png)<!-- -->
 
 Violin plot:
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = continent, y = plastic_waste_per_cap)) +
+  geom_violin() 
 ```
 
-Réponse à la question…
+![](lab-02_files/figure-gfm/plastic-waste-violin-1.png)<!-- -->
+
+Les violins plots permettent de mieux voir la densité/la répartition des
+différentes valeurs, ce que les boxs plots ne peuvent pas faire. En
+effet, les boxs plots montrent plutôt des statistiques sur la
+distribution.
 
 ### Exercise 4
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = plastic_waste_per_cap, y = mismanaged_plastic_waste_per_cap, color = continent)) +
+  geom_point() 
 ```
 
-Réponse à la question…
+![](lab-02_files/figure-gfm/plastic-waste-mismanaged-1.png)<!-- -->
+
+Il y a une relation linéaire entre la quantité de déchet et la quantité
+de déchets non gerés. En effet, plus les gens produisent des déchets,
+plus il y a de déchets non gerés. En colorant les points selon le
+continent, on peut voir que l’Europe et l’Amérique du Nord ont plus de
+déchets, mais que ceux si sont mieux gerés (surtout en Europe), car la
+quantité de déchets non gerés augmente moins. On peut aussi voir que des
+continents comme l’Afrique, l’Asie et l’Océanie produisent moins de
+déchets plastiques, mais que ceux-ci sont moins bien gerés, car la
+quantité de déchets plastiques non gerés augmente plus.
 
 ### Exercise 5
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = total_pop, y = plastic_waste_per_cap)) +
+  geom_point() 
 ```
+
+    ## Warning: Removed 10 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](lab-02_files/figure-gfm/plastic-waste-population-total-1.png)<!-- -->
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = coastal_pop, y = plastic_waste_per_cap)) +
+  geom_point() 
 ```
 
-Réponse à la question…
+![](lab-02_files/figure-gfm/plastic-waste-population-coastal-1.png)<!-- -->
+
+En regardant les deux graphiques, il ne semble pas vraiment y avoir une
+relation plus forte pour une des deux paires de variables. Les deux
+graphiques sont très similaires.
 
 ## Conclusion
 
