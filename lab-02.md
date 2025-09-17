@@ -26,8 +26,22 @@ plastic_waste <- plastic_waste %>%
 ### Exercise 1
 
 ``` r
-# insert code here
+ggplot(data = plastic_waste, 
+       aes (x = plastic_waste_per_cap)) +
+  geom_histogram(binwidth = 0.2) +
+    facet_wrap(~ continent)
 ```
+
+![](lab-02_files/figure-gfm/plastic-waste-continent-1.png)<!-- -->
+
+Certains continents ont une quantité de déchets produits par jour par
+habitant plus élevée que d’autre. En effet, l’Afrique est un très petit
+producteur de déchet plastique. La production de déchet plastique par
+habitant se ressemble en Amérique du Sud, en Europe et en Océanie, où la
+majorité des habitants en produisent environ 0,25 kg par jour et où très
+peu en produisent plus que ça. Finalement, l’Asie et l’Amérique du Nord
+sont les plus gros producteurs de déchets plastiques. Une majorité en
+produit 0,25 kg par jour et plusieurs en prodsuisent plus.
 
 ### Exercise 2
 
